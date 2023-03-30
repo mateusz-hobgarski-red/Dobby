@@ -298,7 +298,7 @@ option(PLUGIN_APPSERVICES "Include AppServices plugin" OFF)
 option(PLUGIN_IONMEMORY "Include ION Memory plugin" OFF)
 option(PLUGIN_DEVICEMAPPER "Include DeviceMapper plugin" OFF)
 option(PLUGIN_GAMEPAD "Include GamepadPlugin plugin" OFF)
-
+option(PLUGIN_USB "Include UsbPlugin plugin" OFF)
 
 if(PLUGIN_TESTPLUGIN)
     add_subdirectory(rdkPlugins/TestPlugin)
@@ -362,6 +362,10 @@ endif()
 
 if(PLUGIN_GAMEPAD)
 	add_subdirectory(rdkPlugins/Gamepad)
+endif()
+
+if(PLUGIN_USB)
+	add_subdirectory(rdkPlugins/USB)
 endif()
 
 # Export targets in Dobby package
