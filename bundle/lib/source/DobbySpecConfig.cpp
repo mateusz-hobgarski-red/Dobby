@@ -1057,9 +1057,9 @@ bool DobbySpecConfig::processConsole(const Json::Value& value,
     // We've got this far, so console is enabled - set console settings in
     // the RDK logging plugin
     Json::Value rdkPluginData;
-    rdkPluginData["sink"] = "file";
-    rdkPluginData["fileOptions"]["path"] = mConsolePath;
-    rdkPluginData["fileOptions"]["limit"] = static_cast<int>(mConsoleLimit);
+    rdkPluginData["sink"] = "journald";
+    //rdkPluginData["fileOptions"]["path"] = mConsolePath;
+    //rdkPluginData["fileOptions"]["limit"] = static_cast<int>(mConsoleLimit);
     mRdkPluginsJson[RDK_LOGGING_PLUGIN_NAME]["data"] = rdkPluginData;
     mRdkPluginsJson[RDK_LOGGING_PLUGIN_NAME]["required"] = false;
 
