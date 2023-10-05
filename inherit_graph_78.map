@@ -1,5 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classIDobbyAsyncResultPrivate.html" title=" " alt="" coords="5,31,200,57"/>
-<area shape="rect" id="node2" href="$classDobbyDeferredAsyncResult.html" title=" " alt="" coords="250,5,451,32"/>
-<area shape="rect" id="node3" href="$classDobbyThreadedAsyncResult.html" title=" " alt="" coords="248,56,453,83"/>
+<area shape="rect" id="node1" href="$structEthanLogLoop_1_1Event.html" title=" " alt="" coords="5,64,164,91"/>
+<area shape="rect" id="node2" href="$structEthanLogLoop_1_1AddClientEvent.html" title=" " alt="" coords="213,5,434,32"/>
+<area shape="rect" id="node3" href="$structEthanLogLoop_1_1SetClientBasePidEvent.html" title=" " alt="" coords="217,57,429,98"/>
+<area shape="rect" id="node4" href="$structEthanLogLoop_1_1TerminateEvent.html" title=" " alt="" coords="212,123,435,149"/>
 </map>
