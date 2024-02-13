@@ -53,12 +53,12 @@ def start_dobby_daemon():
                                 "DobbyDaemon",
                                 "--nofork",
                                 #"--noconsole",
-                                "--journald"
+                                #"--journald"
                                 ],
                                universal_newlines=True)#,
                                #stdout=subprocess.STDOUT,#PIPE,
                                #stderr=subprocess.STDOUT)#PIPE)
-    sleep(1)
+    sleep(0.5)
     return subproc
 
 
