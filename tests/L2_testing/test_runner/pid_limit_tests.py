@@ -16,31 +16,83 @@
 # limitations under the License.
 
 import test_utils
+import subprocess
+from time import sleep
 from pathlib import Path
 
 tests = [
     test_utils.Test("Pid limit default",
                     "sleepy",
                     "256",
-                    "Starts contaiern with no pid limit specified, checks if default pid limit is set for container"),
+                    "Starts container with no pid limit specified, checks if default pid limit is set for container"),
     test_utils.Test("Pid limit no override",
                     "sleepy_pid_limit",
                     "1000",
-                    "Starts contaienr with pid limit specified in config.json, checks if that pid limit was not overriden"),
+                    "Starts container with pid limit specified in config.json, checks if that pid limit was not overriden"),
 ]
 
+def start_dobby_daemon():
+    """Starts DobbyDaemon service, this service is then run in background and must be closed with stop_dobby_daemon.
+
+    Parameters:
+    None
+
+    Returns:
+    subproc (subprocess.Popen): DobbyDaemon service process, True for platform xi_6
+
+    """
+    if test_utils.selected_platform == test_utils.Platforms.xi_6:
+        subprocess.run(["systemctl", "stop", "dobby"])
+    else:
+        subprocess.run(["sudo", "pkill", "DobbyDaemon"])
+
+    test_utils.print_log("Starting Dobby Daemon (logging to Journal)...", test_utils.Severity.debug)
+
+    # as this process is running infinitely we cannot use run_command_line as it waits for execution to end
+    subproc = subprocess.Popen(["sudo",
+                                "DobbyDaemon",
+                                "--nofork",
+                                #"--noconsole",
+                                "--journald"
+                                ],
+                               universal_newlines=True)#,
+                               #stdout=subprocess.STDOUT,#PIPE,
+                               #stderr=subprocess.STDOUT)#PIPE)
+    sleep(1)
+    return subproc
+
+
+def stop_dobby_daemon():
+    """Stops DobbyDaemon service. For Xi6 DobbyDaemon is running all the time so this function returns does nothing
+
+    Parameters:
+    None
+
+    Returns:
+    subproc (subprocess.run): killing DobbyDaemon process, True for platform xi_6
+
+    """
+
+    test_utils.print_log("Stopping Dobby Daemon", test_utils.Severity.debug)
+    subproc = test_utils.run_command_line(["sudo", "pkill", "DobbyDaemon"])
+    sleep(0.2)
+    return subproc
 
 def execute_test():
-    with test_utils.dobby_daemon():
-        output_table = []
+    subproc = start_dobby_daemon()
+    output_table = []
 
-        for test in tests:
-            result = test_container(test.container_id, test.expected_output)
-            output = test_utils.create_simple_test_output(test, result[0], result[1])
+    for test in tests:
+        result = test_container(test.container_id, test.expected_output)
+        if result[0] == False:
+            print("test fail braking")
+            break
+        output = test_utils.create_simple_test_output(test, result[0], result[1])
 
-            output_table.append(output)
-            test_utils.print_single_result(output)
+        output_table.append(output)
+        test_utils.print_single_result(output)
 
+    stop_dobby_daemon()
 
     return test_utils.count_print_results(output_table)
 
@@ -66,6 +118,7 @@ def test_container(container_id, expected_output):
                 bundle_path]
 
         status = test_utils.run_command_line(command)
+        sleep(0.5)
         if "started '" + container_id + "' container" not in status.stdout:
             return False, "Container did not launch successfully"
         

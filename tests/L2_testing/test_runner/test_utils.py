@@ -21,6 +21,7 @@ from time import sleep
 from enum import IntEnum
 from collections import namedtuple
 from argparse import ArgumentParser
+from pathlib import Path
 
 Test = namedtuple('Test', ['name',
                            'container_id',
@@ -40,6 +41,10 @@ class untar_bundle:
     """Context manager for working with tarball bundles"""
     def __init__(self, container_id):
         self.path = get_bundle_path(container_id + "_bundle")
+
+        file = Path(self.path + ".tar.gz")
+        if not file.is_file():
+            raise FileNotFoundError(file)
 
         print_log("untar'ing file %s.tar.gz" % self.path, Severity.debug)
         run_command_line(["tar",
@@ -83,7 +88,7 @@ class dobby_daemon:
     def __enter__(self):
         return self.subproc
 
-    def __exit__(self, etype, value, traceback):
+    def stop(self):
         print_log("Stopping Dobby Daemon", Severity.debug)
 
         if selected_platform == Platforms.xi_6:
@@ -100,6 +105,12 @@ class dobby_daemon:
         # restart dobby service on xi6
         if selected_platform == Platforms.xi_6:
             subprocess.run(["systemctl", "start", "dobby"])
+
+    def __exit__(self, etype, value, traceback):
+        stop(self)
+
+
+
 
 
 class Platforms(IntEnum):
