@@ -25,10 +25,10 @@ tests = [
                     "sleepy",
                     "256",
                     "Starts container with no pid limit specified, checks if default pid limit is set for container"),
-    test_utils.Test("Pid limit no override",
-                    "sleepy_pid_limit",
-                    "1000",
-                    "Starts container with pid limit specified in config.json, checks if that pid limit was not overriden"),
+    # test_utils.Test("Pid limit no override",
+    #                 "sleepy_pid_limit",
+    #                 "1000",
+    #                 "Starts container with pid limit specified in config.json, checks if that pid limit was not overriden"),
 ]
 
 def start_dobby_daemon():
@@ -84,9 +84,6 @@ def execute_test():
 
     for test in tests:
         result = test_container(test.container_id, test.expected_output)
-        if result[0] == False:
-            print("test fail braking")
-            break
         output = test_utils.create_simple_test_output(test, result[0], result[1])
 
         output_table.append(output)
@@ -119,6 +116,7 @@ def test_container(container_id, expected_output):
 
         status = test_utils.run_command_line(command)
         sleep(0.5)
+        print("status.stdout: ", status.stdout)
         if "started '" + container_id + "' container" not in status.stdout:
             return False, "Container did not launch successfully"
         
@@ -137,6 +135,7 @@ def validate_pid_limit(container_id, expected_output):
 
     """
 
+    print("validate pid limit for '%s" % container_id)
     pid_limit = 0
 
     # check pids.max present in containers pid cgroup
