@@ -19,6 +19,7 @@ import test_utils
 import subprocess
 from time import sleep
 from pathlib import Path
+import sys
 
 tests = [
     test_utils.Test("Pid limit default",
@@ -82,6 +83,8 @@ def stop_dobby_daemon():
     return subproc
 
 def execute_test():
+    print("python vesion: ", sys.version)
+
     subproc = start_dobby_daemon()
     output_table = []
 
