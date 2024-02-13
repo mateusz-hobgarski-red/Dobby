@@ -55,7 +55,10 @@ def start_dobby_daemon():
                                 #"--noconsole",
                                 #"--journald"
                                 ],
-                               universal_newlines=True)#,
+                               universal_newlines=True,
+                               bufsize = 0,# unbuffered stdout
+                               stderr=subprocess.STDOUT, #stderr goes to stdout
+                                 )
                                #stdout=subprocess.STDOUT,#PIPE,
                                #stderr=subprocess.STDOUT)#PIPE)
     sleep(0.5)
