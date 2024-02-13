@@ -88,7 +88,7 @@ class dobby_daemon:
     def __enter__(self):
         return self.subproc
 
-    def stop(self):
+    def __exit__(self, etype, value, traceback):
         print_log("Stopping Dobby Daemon", Severity.debug)
 
         if selected_platform == Platforms.xi_6:
@@ -105,11 +105,6 @@ class dobby_daemon:
         # restart dobby service on xi6
         if selected_platform == Platforms.xi_6:
             subprocess.run(["systemctl", "start", "dobby"])
-
-    def __exit__(self, etype, value, traceback):
-        stop(self)
-
-
 
 
 
