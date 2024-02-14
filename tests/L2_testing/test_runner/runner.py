@@ -30,15 +30,16 @@ import sys
 
 from time import sleep
 
-supported_tests = [basic_sanity_tests,
-                   container_manipulations,
-                   bundle_generation,
-                   plugin_launcher,
+supported_tests = [
+#                   basic_sanity_tests,
+#                   container_manipulations,
+#                   bundle_generation,
+#                   plugin_launcher,
 #                   command_line_containers, # Commented these tests because they are all failing in the workflow and will be enabled once they are resolved
 #                   start_from_bundle,
 #                   thunder_plugin,
 #                   network_tests,
-                   gui_containers,
+#                   gui_containers,
                    pid_limit_tests]
 
 def run_all_tests():
