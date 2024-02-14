@@ -98,7 +98,9 @@ def execute_test():
     stop_dobby_daemon()
 
     print("Printing crun logs ...")
-    subprocess.run(["cat", "/tmp/container.log"])
+    locations = ["/tmp/container.log", "/opt/logs/crun.log"]
+    for l in locations:
+        print(l, "\n", Path(l).read_text())
     print("Finished printing crun logs")
 
     return test_utils.count_print_results(output_table)
