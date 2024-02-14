@@ -103,6 +103,10 @@ def execute_test():
         print(l, "\n", Path(l).read_text())
     print("Finished printing crun logs")
 
+    print("Printing crun version ...")
+    test_utils.run_command_line(["crun", "-v"])
+    print("Finished printing crun version")
+
     return test_utils.count_print_results(output_table)
 
 
