@@ -69,7 +69,7 @@ jobs:
       - name: Install crun
         run: |
          cd $GITHUB_WORKSPACE
-         git clone https://github.com/containers/crun.git -b 1.7.2
+         git clone https://github.com/containers/crun.git
          cd crun
          ./autogen.sh
          ./configure
