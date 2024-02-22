@@ -136,9 +136,11 @@ jobs:
           cd ~/memcr
           git clone https://github.com/LibertyGlobal/memcr.git .
           make COMPRESS_LZ4=1 CHECKSUM_MD5=1 ENCRYPT=1
-          cp ~/Dobby/develop/vagrant/memcr/start_memcr.sh ~/memcr/scripts/
           ls -al ~/memcr/scripts/
           ls -al ~/Dobby
+          echo $GITHUB_WORKSPACE
+          
+          cp ~/Dobby/develop/vagrant/memcr/start_memcr.sh ~/memcr/scripts/
 
       - name: Checkout srcThunder
         run: |
