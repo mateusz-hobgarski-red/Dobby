@@ -132,7 +132,7 @@ jobs:
 
       - name: build memcr
         run: |
-          la -al .
+          ls -al .
           echo $GITHUB_WORKSPACE
           ls -al $GITHUB_WORKSPACE
           ls -al ~/Dobby
