@@ -132,21 +132,19 @@ jobs:
 
       - name: build memcr
         run: |
+          pwd
           ls -al .
           echo $GITHUB_WORKSPACE
           ls -al $GITHUB_WORKSPACE
-          ls -al ~/Dobby
-          mkdir -p ~/memcr
-          cd ~/memcr
+          mkdir -p memcr
+          cd memcr
         
           git clone https://github.com/LibertyGlobal/memcr.git .
           make COMPRESS_LZ4=1 CHECKSUM_MD5=1 ENCRYPT=1
-          mkdir -p ~/memcr/scripts          
-          ls -al ~/memcr/scripts/
-          ls -al $GITHUB_WORKSPACE
-          ls -al ~/Dobby
+          mkdir -p scripts          
+          ls -al $GITHUB_WORKSPACE/memcr/scripts/
                     
-          cp ~/Dobby/develop/vagrant/memcr/start_memcr.sh ~/memcr/scripts/
+          cp $GITHUB_WORKSPACE/Dobby/develop/vagrant/memcr/start_memcr.sh $GITHUB_WORKSPACE/memcr/scripts/
 
       - name: Checkout srcThunder
         run: |
