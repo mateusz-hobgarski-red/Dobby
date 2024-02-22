@@ -49,8 +49,8 @@ class memcr:
         self.subproc = subprocess.Popen(["~/memcr/scripts/start_memcr.sh"],
                                         universal_newlines=True,
                                         shell=True,
-                                        stdout=subprocess.PIPE,
-                                        stderr=subprocess.PIPE
+                                        #stdout=subprocess.PIPE,
+                                        #stderr=subprocess.PIPE
                                         )
 
     def __enter__(self):
