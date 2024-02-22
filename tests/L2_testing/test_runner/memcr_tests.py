@@ -45,8 +45,12 @@ class memcr:
     """ Starts memcr """
     def __init__(self):
         test_utils.print_log("Starting memcr", test_utils.Severity.debug)
+
+        script_path = "~/aaa/memcr/scripts/start_memcr.sh"
+        subprocess.run(["ls", "-al", script_path])
+
         # as this process is running infinitely we cannot use run_command_line as it waits for execution to end
-        self.subproc = subprocess.Popen(["~/memcr/scripts/start_memcr.sh"],
+        self.subproc = subprocess.Popen([script_path],
                                         universal_newlines=True,
                                         shell=True,
                                         #stdout=subprocess.PIPE,
