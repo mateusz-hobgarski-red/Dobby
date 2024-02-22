@@ -132,13 +132,17 @@ jobs:
 
       - name: build memcr
         run: |
+          la -al .
+          echo $GITHUB_WORKSPACE
+          ls -al $GITHUB_WORKSPACE
+          ls -al ~/Dobby
           mkdir -p ~/memcr
-          mkdir -p ~/memcr/scripts
           cd ~/memcr
+        
           git clone https://github.com/LibertyGlobal/memcr.git .
           make COMPRESS_LZ4=1 CHECKSUM_MD5=1 ENCRYPT=1
+          mkdir -p ~/memcr/scripts          
           ls -al ~/memcr/scripts/
-          echo $GITHUB_WORKSPACE
           ls -al $GITHUB_WORKSPACE
           ls -al ~/Dobby
                     
