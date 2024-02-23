@@ -137,7 +137,7 @@ def print_log(log_message, log_severity):
     """
 
     if log_severity <= current_log_level:
-        print(log_message)
+        print(log_message, flush=True)
 
 
 def print_single_result(result):
