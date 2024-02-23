@@ -72,12 +72,12 @@ class dobby_daemon:
         self.subproc = subprocess.Popen(["sudo",
                                          "DobbyDaemon",
                                          "--nofork",
-                                         "--journald",
-                                         "--noconsole"
+                                         #"--journald",
+                                         #"--noconsole"
                                         ],
                                         universal_newlines=True,
-                                        stdout=subprocess.PIPE,
-                                        stderr=subprocess.PIPE
+                                        #stdout=subprocess.PIPE,
+                                        #stderr=subprocess.PIPE
                                         )
         sleep(1) # give DobbyDaemon time to initialise
 
