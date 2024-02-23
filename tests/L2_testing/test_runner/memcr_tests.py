@@ -17,7 +17,6 @@
 
 import test_utils
 import subprocess
-import signal
 import json
 from time import sleep
 from collections import namedtuple
@@ -33,17 +32,6 @@ Test = namedtuple('Test', ['name',
                   )
 
 tests = (
-    Test("Basic basic memcr test",
-         "sleepy",
-         True,
-         "Starts memcr and waits some time",
-         "basic_basic_memcr_test"),
-    Test("Basic basic memcr test 2",
-         "sleepy",
-         True,
-         "Starts memcr and waits some time, does not use memcr class",
-         "basic_basic_memcr_test_2"),
-
     Test("Basic memcr test",
          "sleepy",
          True,
@@ -56,15 +44,13 @@ class memcr:
     """ Starts memcr """
     def __init__(self):
         test_utils.print_log("Starting memcr", test_utils.Severity.debug)
-
         # as this process is running infinitely we cannot use run_command_line as it waits for execution to end
         self.subproc = subprocess.Popen(["~/memcr/scripts/start_memcr.sh"],
                                         universal_newlines=True,
                                         shell=True,
-                                        #stdout=subprocess.PIPE,
-                                        #stderr=subprocess.PIPE
+                                        stdout=subprocess.PIPE,
+                                        stderr=subprocess.PIPE
                                         )
-        sleep(1)
 
     def __enter__(self):
         return self
@@ -168,52 +154,6 @@ def check_pids_restored(pids):
             return False
 
     return True
-
-
-def basic_basic_memcr_test(container_id):
-    print("Basic basic test start", flush=True)
-    with memcr():
-        print("memcr created, waiting...", flush=True)
-        sleep(2)
-        print("memcr created, waiting 2...", flush=True)
-        sleep(2)
-        print("exiting test", flush=True)
-    print("memcr should be closed now", flush=True)
-    return True, "Test passed"
-
-def start_memcr():
-    print("Starting memcr", flush=True)
-
-    # as this process is running infinitely we cannot use run_command_line as it waits for execution to end
-    subprocess.Popen(["~/memcr/scripts/start_memcr.sh"],
-                                    universal_newlines=True,
-                                    shell=True,
-                                    #stdout=subprocess.PIPE,
-                                    #stderr=subprocess.PIPE
-                                    )
-    sleep(1)
-    print("Started memcr", flush=True)
-
-
-def stop_memcr():
-    print("Stopping memcr", flush=True)
-    subprocess.run(["sudo", "pkill", "-2", "memcr"])
-    print("Stopped memcr", flush=True)
-
-
-def basic_basic_memcr_test_2(container_id):
-    print("Basic basic test start 2", flush=True)
-    
-    start_memcr()
-    print("memcr created, waiting...", flush=True)
-    sleep(2)
-    print("memcr created, waiting 2...", flush=True)
-    sleep(2)
-    print("exiting test", flush=True)
-    stop_memcr()
-
-    print("memcr should be closed now", flush=True)
-    return True, "Test passed"
 
 
 def basic_memcr_test(container_id):
